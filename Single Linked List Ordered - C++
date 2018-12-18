@@ -1,0 +1,122 @@
+/* Creates a Sinlge Linked List Which is Ordered */
+
+class Single_Linked_List_Ordered{
+public:
+    
+    struct Node{
+        
+        int data;
+        Node* next;
+        
+        Node(int value){
+            data = value;
+            next = NULL;
+        };
+        
+        ~Node(){
+            cout << "this node with value " << data << " has been deleted" << endl;
+        };
+    };
+    
+    Node* head;
+    Node* tail;
+    
+    Single_Linked_List_Ordered(){
+        head = NULL;
+        tail = NULL;
+    };
+    
+    ~Single_Linked_List_Ordered(){
+        cout << " This list has been deleted" << endl;
+    };
+    
+    
+    void insert(int value){
+        Node* new1 = new Node(value);
+        Node*prev = head;
+        if(prev == NULL){
+            head = new1;
+            tail = new1;
+        }
+        else if(prev -> next == NULL || prev-> data > value){
+            if (prev-> data > value){
+                head = new1;
+                head-> next = prev;
+            }
+            else{
+                head-> next = new1;
+                tail = new1;
+            };
+        }
+        else{
+            Node* current = prev-> next;
+            while(current -> next != NULL && current-> data < value){
+                prev = current;
+                current = prev-> next;
+            };
+            if(current -> next == NULL && current -> data < value){
+                current -> next = new1;
+                tail = new1;
+            }
+            else if (current -> next == NULL && current -> data > value){
+                prev-> next = new1;
+                new1-> next = current;
+            }
+            else{
+                prev-> next = new1;
+                new1-> next = current;
+            };
+        };
+    };
+    
+    bool find(int value){
+        Node* current = head;
+        while (current-> next !=NULL && current -> data != value){
+            current = current -> next;
+        };
+        if(current -> data == value){
+            return true;
+        }
+        else{
+            return false;
+        };
+    };
+    
+    void remove(int value){
+        Node* prev = head;
+        if (prev-> data == value){
+            head = prev-> next;
+            delete prev;
+        }
+        else if (prev-> next == NULL){
+            cout << "This value is not in the list" << endl;
+        }
+        else{
+            Node* current = prev-> next;
+            while(current -> next != NULL && current-> data != value){
+                prev = current;
+                current = prev-> next;
+            };
+            if (current-> data == value && current -> next != NULL){
+                prev-> next = current -> next;
+                delete current;
+            }
+            else if (current -> data == value && current -> next == NULL){
+                prev-> next = NULL;
+                delete current;
+            }
+            else{
+                cout << "This value is not in the list." << endl;
+            };
+        };
+    };
+    
+    void show(){
+        Node* current = head;
+        while (current -> next != NULL){
+            cout << current-> data << endl;
+            current = current -> next;
+        };
+        cout << current -> data << endl;
+    };
+};
