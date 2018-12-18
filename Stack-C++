@@ -1,0 +1,42 @@
+/* This function creates a stack using a vector */
+
+class Stack{
+    
+public:
+    
+    vector<int> stack;
+    
+    Stack(){
+        cout << "stack has been created" << endl;
+    };
+    
+    ~Stack(){
+        cout << "this stack has been deleted" << endl;
+    }
+    
+    void add(int value){
+        stack.push_back(value);
+    };
+    
+    int remove(){
+        int temp = stack.back();
+        stack.pop_back();
+        return temp;
+    };
+    
+    void show(){
+        for(int x = 0; x < stack.size(); x++){
+            cout << stack[x] << endl;
+        };
+    };
+    
+    bool empty(){
+        if(stack.size() ==0){
+            return true;
+        }
+        else{
+            return false;
+        };
+    };
+};
+
