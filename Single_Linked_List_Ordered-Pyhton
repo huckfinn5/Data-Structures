@@ -1,0 +1,69 @@
+'''creates a singly linked list class, ordered '''
+
+class Node:
+    
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        
+class Single_Linked_Ordered:
+    
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        
+    def insert(self, value):
+        new = Node(value)
+        if self.head == None:
+            self.head = new
+            self.tail = new
+        else:
+            if self.head.data > new.data:
+                new.next = self.head
+                self.head = new
+            elif self.head.data < new.data and self.head.next == None:
+                self.head.next = new
+                self.tail = new
+            else:
+                prev = self.head
+                current = prev.next
+                while current.next != None and current.data < new.data:
+                    prev = current
+                    current = prev.next
+                if current.next != None:
+                    prev.next = new
+                    new.next = current
+                elif current.next == None and current.data > new.data:
+                    prev.next = new
+                    new.next = current
+                else:
+                    current.next = new
+                    
+    def delete(self, value):
+        prev =  self.head
+        if self.head.data == value:
+            self.head = self.head.next
+            del prev
+        elif self.head == None:
+            print('The list is empty')
+        else:
+            current = prev.next
+            while current.next != None and current.data != value:
+                prev = current
+                current = prev.next
+            if current.next != None and current.data == value:
+                prev.next = current.next
+                del current
+            elif current.next == None and current.data == value:
+                self.tail = prev
+                prev.next = None
+                del current
+            else:
+                print('The Node you are looking for is not in the stack')
+                
+    def show(self):
+        current = self.head
+        while current.next != None:
+            print(current.data)
+            current = current.next
+        print(current.data)
