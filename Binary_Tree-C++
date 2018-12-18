@@ -1,0 +1,175 @@
+/* This class will make a binary tree for storing data values*/
+
+
+class Binary_Tree{
+    
+public:
+    
+    struct Node{
+        
+        int data;
+        int level;
+        Node* right;
+        Node* left;
+        
+        Node(int value){
+            data = value;
+            level = NULL;
+            right = NULL;
+            left = NULL;
+        };
+        ~Node(){
+        };
+    };
+    
+    struct Node_Queue{
+        
+    public:
+        
+        vector<Node*> temp2;
+        
+        Node_Queue(){
+            cout << " A Queue has been constructed" << endl;
+        };
+        
+        ~Node_Queue(){
+            cout << " The Queue has been deleted" << endl;
+        };
+        
+        void enqueue(Node* value){
+            temp2.insert(temp2.cbegin(),value);
+        };
+        
+        Node* dequeue(){
+            Node* temp = temp2.back();
+            temp2.pop_back();
+            return temp;
+        };
+        
+        bool empty(){
+            if(temp2.size() ==0){
+                return true;
+            }
+            else{
+                return false;
+            };
+        };
+    };
+    
+    Node* head;
+    
+    Binary_Tree(){
+        head = NULL;
+    }
+    ~Binary_Tree(){
+        
+    }
+    
+    void add(int value){
+        Node *new1 = new Node(value);
+        if( head == NULL){
+            head = new1;
+            new1-> level = 1;
+        }
+        else{
+            int counter = 2;
+            Node* current = head;
+            bool found = false;
+            while(found ==false){
+                if(current -> data > value){
+                    if (current -> left ==NULL){
+                        new1-> level = counter;
+                        current -> left = new1;
+                        found = true;
+                    }
+                    else{
+                        current = current -> left;
+                        counter ++;
+                    };
+                }
+                else {
+                    if(current-> right ==NULL){
+                        new1-> level = counter;
+                        current-> right = new1;
+                        found = true;
+                        
+                    }
+                    else{
+                        current = current-> right;
+                        counter ++;
+                    };
+                };
+            };
+        };
+    };
+    
+    bool in(int value){
+        Node* current = head;
+        if (current-> data == value){
+            return true;
+        }
+        else{
+            bool found = false;
+            while (found == false){
+                if(current-> data == value){
+                    return true;
+                }
+                else if (current -> data > value){
+                    if(current-> left == NULL){
+                        return false;
+                    }
+                    else{
+                        current = current-> left;
+                    };
+                }
+                else{
+                    if(current-> right ==NULL){
+                        return false;
+                    }
+                    else{
+                        current = current-> right;
+                    };
+                };
+            };
+        };
+        return true;
+    };
+    
+    void show(){
+        if(head ==NULL){
+            cout << "theres nothing in the binary tree" << endl;
+        };
+        vector<int> answers;
+        Node_Queue queue;
+        queue.enqueue(head);
+        int level = 1;
+        while(queue.empty()==false){
+            Node* pointer = queue.dequeue();
+            if(pointer -> level == level){
+                answers.push_back(pointer-> data);
+                if(pointer-> left != NULL){
+                    queue.enqueue(pointer->left);}
+                if(pointer-> right != NULL){
+                    queue.enqueue(pointer->right);}
+            }
+            else{
+                level = pointer-> level;
+                for(int x = 0; x < answers.size(); x++){
+                    cout << answers[x] << " ";
+                };
+                cout << endl;
+                answers.clear();
+                answers.push_back(pointer-> data);
+                if(pointer-> left != NULL){
+                    queue.enqueue(pointer->left);}
+                if(pointer-> right != NULL){
+                    queue.enqueue(pointer->right);}
+            };
+        };
+        for(int x = 0; x < answers.size();x++){
+            cout << answers[x] << " ";
+        };
+        cout << endl;
+    };
+};
+
