@@ -1,0 +1,79 @@
+'''creates a doubly linked list class, ordered '''
+
+class Node:
+    
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None
+        
+class Single_Double_Linked_Ordered:
+    
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        
+    def insert(self, value):
+        new = Node(value)
+        if self.head == None:
+            self.head = new
+            self.tail = new
+        else:
+            if self.head.data > new.data:
+                new.next = self.head
+                self.head.prev = new
+                self.head = new
+            elif self.head.data <= new.data and self.head.next == None:
+                self.head.next = new
+                new.prev = self.head
+                self.tail = new
+            else:
+                current = self.head
+                while current.next != None and current.data <= new.data:
+                    current = current.next
+                if current.next != None:
+                    temp = current.prev
+                    temp.next = new
+                    new.next = current
+                    current.prev = new
+                    new.prev = temp
+                elif current.next == None and current.data >= new.data:
+                    temp = current.prev
+                    temp.next = new
+                    new.next = current
+                    current.prev = new
+                    new.prev =temp
+                else:
+                    current.next = new
+                    new.prev = current
+                    
+    def delete(self, value):
+        current =  self.head
+        if self.head.data == value:
+            self.head = self.head.next
+            del current
+        elif self.head == None:
+            print('The list is empty')
+        else:
+            while current.next != None and current.data != value:
+                current = current.next
+            if current.next != None and current.data == value:
+                temp = current.prev
+                temp2 = current.next
+                temp.next = temp2
+                temp2.prev = temp
+                del current
+            elif current.next == None and current.data == value:
+                temp = current.prev
+                self.tail = temp
+                temp.next = None
+                del current
+            else:
+                print('The Node you are looking for is not in the stack')
+                
+    def show(self):
+        current = self.head
+        while current.next != None:
+            print(current.data)
+            current = current.next
+        print(current.data)
