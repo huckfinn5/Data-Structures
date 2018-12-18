@@ -1,0 +1,40 @@
+/* This class creates a queue! */
+
+class Queue{
+    
+public:
+    
+    vector<int> queue;
+    
+    Queue(){
+        cout << " A Queue has been constructed" << endl;
+    };
+    
+    ~Queue(){
+        cout << " The Queue has been deleted" << endl;
+    };
+    
+    void enqueue(int value){
+        queue.insert(queue.cbegin(),value);
+    };
+    
+    int dequeue(){
+        int temp = queue.back();
+        queue.pop_back();
+        return temp;
+    };
+    
+    void show(){
+        for (int x = 0; x < queue.size(); x++){
+            cout << queue[x]<< endl;
+        };
+    };
+    bool empty(){
+        if(queue.size() ==0){
+            return true;
+        }
+        else{
+            return false;
+        };
+    };
+};
