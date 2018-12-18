@@ -1,0 +1,24 @@
+''' implementation of a stack data structure using the built in python list'''
+
+class Stack:
+    
+    def __init__(self):
+        self.stack = []
+        
+    def push(self, value):
+        self.stack.append(value)
+        
+    def popper(self):
+        return self.stack.pop()
+        
+    def check_empty(self):
+        if len(self.stack) ==0:
+            return True
+        else:
+            return False
+    
+    def see_top(self):
+        return self.stack[-1]
+    
+    def show(self):
+        print(self.stack)
