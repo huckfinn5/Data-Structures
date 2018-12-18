@@ -1,0 +1,48 @@
+'''creates a max heap '''
+
+def swap(list1,i,j):
+    temp = list1[i]
+    list1[i] = list1[j]
+    list1[j] = temp
+    
+    
+class Max_heap:
+    
+    def __init__(self):
+        self.heap = [0]
+        
+    def insert(self,value):
+        if len(self.heap) ==1:
+            self.heap.append(value)
+        else:
+            self.heap.append(value)
+            length = len(self.heap)-1
+            question = int(length/2)
+            while self.heap[question] < self.heap[length] and question > 0:
+                swap(self.heap, question, length)
+                length = question
+                question = int(length/2)
+    
+    def show(self):
+        print(self.heap)
+        
+    def delete_max(self):
+        swap(self.heap, 1, len(self.heap)-1)
+        self.heap.pop()
+        question = 1
+        var1 = question *2
+        var2 = question *2 +1
+        while var2 < len(self.heap) and max(self.heap[var1], self.heap[var2]) > self.heap[question]:
+            if self.heap[var1] > self.heap[var2]:
+                swap(self.heap, var1, question)
+                question = var1
+                var1 = question *2
+                var2 = question *2 +1
+            else:
+                swap(self.heap, var2, question)
+                question = var2
+                var1 = question *2
+                var2 = question *2 +1
+        if var1 < len(self.heap) and self.heap[var1] > self.heap[question]:
+            swap(self.heap, var1, question)
+ 
