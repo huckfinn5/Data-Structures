@@ -1,0 +1,135 @@
+/* Creates a doubly linked list which is ordered*/
+
+
+class Doubly_Linked_Sorted_List{
+    
+public:
+    
+    struct Node{
+        
+        int data;
+        Node* next;
+        Node* prev;
+        
+        Node(int value){
+            data = value;
+            next = NULL;
+            prev = NULL;
+        };
+        
+        ~Node(){
+            cout << "this node with value " << data << " has been deleted" << endl;
+        };
+    };
+    
+    Node* head;
+    Node* tail;
+    
+    Doubly_Linked_Sorted_List(){
+        head = NULL;
+        tail = NULL;
+    };
+    
+    ~Doubly_Linked_Sorted_List(){
+        cout << " This list has been deleted" << endl;
+    };
+    
+    
+    void insert(int value){
+        Node* new1 = new Node(value);
+        Node*current = head;
+        if(current == NULL){
+            head = new1;
+            tail = new1;
+        }
+        else if(current -> next == NULL || current-> data > value){
+            if (current-> data > value){
+                head = new1;
+                head-> next = current;
+                current -> prev = head;
+            }
+            else{
+                head-> next = new1;
+                new1-> prev = head;
+                tail = new1;
+            };
+        }
+        else{
+            while(current -> next != NULL && current-> data < value){
+                current = current -> next;
+            };
+            if(current -> next == NULL && current -> data < value){
+                current -> next = new1;
+                new1-> prev = current;
+                tail = new1;
+            }
+            else if (current -> next == NULL && current -> data > value){
+                Node* prev = current -> prev;
+                prev-> next = new1;
+                new1-> prev = prev;
+                new1-> next = current;
+                current -> prev = new1;
+            }
+            else{
+                Node* prev = current -> prev;
+                prev-> next = new1;
+                new1-> prev = prev;
+                current -> prev = new1;
+                new1-> next = current;
+            };
+        };
+    };
+    
+    bool find(int value){
+        Node* current = head;
+        while (current-> next !=NULL && current -> data != value){
+            current = current -> next;
+        };
+        if(current -> data == value){
+            return true;
+        }
+        else{
+            return false;
+        };
+    };
+    
+    void remove(int value){
+        Node* current = head;
+        if (current-> data == value){
+            head = current-> next;
+            delete current;
+        }
+        else if (current-> next == NULL){
+            cout << "This value is not in the list" << endl;
+        }
+        else{
+            while(current -> next != NULL && current-> data != value){
+                current = current-> next;
+            };
+            if (current-> data == value && current -> next != NULL){
+                Node* prev = current -> prev;
+                Node* next = current-> next;
+                prev-> next = current -> next;
+                next-> prev = prev;
+                delete current;
+            }
+            else if (current -> data == value && current -> next == NULL){
+                Node* prev = current -> prev;
+                prev-> next = NULL;
+                delete current;
+            }
+            else{
+                cout << "This value is not in the list." << endl;
+            };
+        };
+    };
+    
+    void show(){
+        Node* current = head;
+        while (current -> next != NULL){
+            cout << current-> data << endl;
+            current = current -> next;
+        };
+        cout << current -> data << endl;
+    };
+};
